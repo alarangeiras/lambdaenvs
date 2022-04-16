@@ -47,5 +47,7 @@ func (e envServiceImpl) Get(input EnvsInput) (*EnvsOutput, error) {
 		})
 	}
 
+	envsOutput.Envs = envs
+
 	return &envsOutput, nil
 }

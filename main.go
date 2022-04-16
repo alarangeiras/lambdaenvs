@@ -15,7 +15,7 @@ import (
 func main() {
 	app := &cli.App{
 		Name:  "lambdaenvs",
-		Usage: "",
+		Usage: "a cli tool to get lambda environment variables",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:  "region",
@@ -35,7 +35,6 @@ func main() {
 			}
 			region := c.String("region")
 			profile := c.String("profile")
-
 			service := entrypoint.GetEnvsService(profile, region)
 			output, err := service.Get(services.EnvsInput{
 				FunctionName: functionName,
@@ -44,9 +43,8 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
-
 			for _, env := range output.Envs {
-				fmt.Println(fmt.Sprintf("%s=%s", env.Name, env.Value))
+				fmt.Println(fmt.Sprintf("%s=%s", color.Colorize(color.Blue, env.Name), env.Value))
 			}
 
 			return nil
